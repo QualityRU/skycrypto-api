@@ -1,0 +1,14 @@
+version: '3.7'
+
+services:
+  api:
+    build: .
+    restart: always
+    container_name: sky_internal_api
+    volumes:
+      - .:/code
+    command: python api.py
+    ports:
+      - 5555:5555
+    env_file:
+      - .env

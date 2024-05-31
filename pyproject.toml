@@ -1,0 +1,16 @@
+[tool.black]
+line-length = 120
+
+[tool.isort]
+profile = "black"
+line_length = 120
+
+[tool.pytest.ini_options]
+python_files = ["tests.py", "test_*.py", "*_test.py", "*_tests.py"]
+testpaths = ["tests"]
+addopts = ["--cov", "-s", "-vv", "--lf"]
+
+[tool.mypy]
+ignore_missing_imports_per_module = true
+ignore_missing_imports = true
+exclude = ["venv", "alembic"]
