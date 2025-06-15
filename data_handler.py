@@ -766,9 +766,9 @@ class DataHandler:
         q = 'UPDATE "user" SET super_verify_only = :super_verify_only WHERE id = :uid'
         session.execute(q, {'super_verify_only': super_verify_only, 'uid': user_id})
 
-    def update_allow_super_buy_status(self, symbol, user_id, allow_super_buy, session):
-        q = 'UPDATE "user" SET allow_super_buy = :allow_super_buy WHERE id = :uid'
-        session.execute(q, {'allow_super_buy': allow_super_buy, 'uid': user_id})
+    def update_allow_payment_v2_status(self, symbol, user_id, allow_payment_v2, session):
+        q = 'UPDATE "user" SET allow_payment_v2 = :allow_payment_v2 WHERE id = :uid'
+        session.execute(q, {'allow_payment_v2': allow_payment_v2, 'uid': user_id})
 
     def update_sky_pay_status(self, symbol, user_id, sky_pay, session):
         q = 'UPDATE "user" SET sky_pay = :sky_pay WHERE id = :uid'
@@ -1006,7 +1006,7 @@ class DataHandler:
         res = session.execute(
             f"""
             SELECT id, telegram_id, nickname, lang, is_baned, is_deleted, is_verify,
-                   sky_pay, allow_super_buy, currency, ref_kw, email, allow_sell, allow_sale_v2,
+                   sky_pay, allow_payment_v2, currency, ref_kw, email, allow_sell, allow_sale_v2,
                     email, rating, shadow_ban, apply_shadow_ban, super_verify_only
             FROM "user" 
             WHERE id = :uid
@@ -1016,14 +1016,14 @@ class DataHandler:
         res = res.fetchone()
         if not res:
             raise BadRequest('no such user')
-        id_, telegram_id, nickname, lang, is_baned, is_deleted, is_verify, sky_pay, allow_super_buy, currency, ref_kw, email, \
+        id_, telegram_id, nickname, lang, is_baned, is_deleted, is_verify, sky_pay, allow_payment_v2, currency, ref_kw, email, \
                 allow_sell, allow_sale_v2, email, rating, shadow_ban, apply_shadow_ban, super_verify_only = res
         is_admin = self.is_user_have_rights(user_id, 'low', session)
         data = {
             'id': id_, 'telegram_id': telegram_id, 'nickname': nickname, 'lang': lang, 'currency': currency,
             'is_baned': is_baned, 'is_deleted': is_deleted, 'is_verify': is_verify, 'is_admin': is_admin,
             'ref_code': ref_kw or nickname, 'email': email, 'allow_sell': allow_sell, 'allow_sale_v2': allow_sale_v2, 'sky_pay': sky_pay,
-            'allow_super_buy': allow_super_buy, 'shadow_ban': shadow_ban, 'apply_shadow_ban': apply_shadow_ban,
+            'allow_payment_v2': allow_payment_v2, 'shadow_ban': shadow_ban, 'apply_shadow_ban': apply_shadow_ban,
             'super_verify_only': super_verify_only
         }
         if expand_email:
@@ -1035,7 +1035,7 @@ class DataHandler:
     def get_user_info(self, symbol, nickname, session):
         q = f"""
             SELECT id, telegram_id, nickname, lang, is_baned, is_deleted, is_verify, super_verify_only, currency,
-                allow_sell, allow_sale_v2, sky_pay, allow_super_buy, shadow_ban, apply_shadow_ban
+                allow_sell, allow_sale_v2, sky_pay, allow_payment_v2, shadow_ban, apply_shadow_ban
             FROM "user"
             WHERE nickname = :nickname
             LIMIT 1
@@ -2441,17 +2441,19 @@ class DataHandler:
             if balance > 0:
                 change_balance(user_id=seller_id, msg=msg, symbol=symbol, amount_subunits=-balance, session=session)
             complete_sell(receiver_id, deal['sell_id'], session)
+
         elif deal['type'] == DealTypes.sky_sale_v2:
             msg = f'SKY SALE_V2: {msg}, {deal["sale_v2_id"]}'
             change_balance(user_id=buyer_id, msg=msg, symbol=symbol, amount=to_balance, session=session)
             create_operation(session, buyer_id, deal['identificator'], symbol, deal['currency'], to_balance, action=Action.deal)
-            complete_sale_v2(user_id=seller_id, sale_v2_id=deal['sale_v2_id'], session=session)
             service_commission = get_merchant_commission(seller_id, session)
             buyer_commission = self.get_buyer_commission(deal['rate'], deal['symbol'], deal['amount_currency'], deal['currency'], session)
             print(f'buyer_commission = {buyer_commission}')
             commission_currency = service_commission * Decimal(str(deal['amount_currency']))
             comm = service_commission * to_balance
             merchant_commission = comm
+            sent_crypto = self.crypto_manager.from_subunit(symbol, amount_frozen) + comm
+            complete_sale_v2(user_id=seller_id, sale_v2_id=deal['sale_v2_id'], sent_crypto=sent_crypto, session=session)
 
             try:
                 change_balance(user_id=seller_id, msg=msg, symbol=symbol, amount=-comm, session=session)

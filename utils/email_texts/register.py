@@ -1,0 +1,40 @@
+REGISTER = """
+<html>
+<head>
+      <style>
+      body {{
+           line-height: 1.5;
+           font-family: Arial, sans-serif;
+           font-size: 13px;
+      }}
+
+      .logo:link {{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            color: #0097db;
+            text-decoration: none;
+      }}
+      .logo h1 {{
+            margin-left: 10px;
+      }}
+      </style>
+</head>
+<body>
+      <a class="logo" href="http://{prefix}skycrypto.net">
+         <img alt="Sky Crypto" src="http://{prefix}skycrypto.net/logo.png"/>
+         <h1>SKY CRYPTO</h1>
+      </a>
+      <h2>Подтверждение регистрации пользователя</h2>
+      <br>
+      <span>Для завершения регистрации, пожалуйста, введите код <b>{code}</b></span>
+      <br><br>
+      --
+      <br>
+      <span>С уважением, руководство сервиса <b>SKY CRYPTO</b></span>
+      <br><br>
+      <h3>Контакты для связи</h3>
+      <span>Сообщение оператору: <a href="http://{prefix}skycrypto.net/contacts">http://{prefix}skycrypto.net/contacts</a></span>
+</body>
+</html>
+"""

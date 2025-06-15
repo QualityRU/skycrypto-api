@@ -8,26 +8,15 @@ from utils.logger import logger
 import traceback
 
 
-def exception_handler(
-    exception: BaseException, status: int, detail: Optional[str] = None
-) -> Tuple[dict, int]:
+def exception_handler(exception: BaseException, status: int, detail: Optional[str] = None) -> Tuple[dict, int]:
     detail = detail or str(exception)
-    return (
-        jsonify(
-            {
-                'type': exception.__class__.__name__,
-                'detail': detail,
-                'status': status,
-            }
-        ),
-        status,
-    )
+    return jsonify({'type': exception.__class__.__name__, 'detail': detail, 'status': status}), status
 
 
 @app.errorhandler(InternalServerError)
 def handle_error(e):
     logger.error(traceback.format_exc())
-    return exception_handler(e, 500, 'Internal server error')
+    return exception_handler(e, 500, "Internal server error")
 
 
 @app.errorhandler(BadRequest)

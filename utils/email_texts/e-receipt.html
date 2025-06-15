@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>e-receipt</title>
+
+    <style>
+        body {
+            font-family: Arial, serif;
+        }
+
+        .receipt {
+            border-radius: 4px;
+            box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            width: 100%;
+            padding: 20px 10px;
+            background-color: black;
+            color: white;
+            font-size: 16px;
+        }
+
+        .logo {
+            display: inline-block;
+            width: 35%;
+        }
+
+        .logo img {
+            height: 40px;
+            margin-left: 30%;
+        }
+
+        .logo .caption {
+            display: inline-block;
+            position: absolute;
+            font-size: 30px;
+            margin-left: 15px;
+            margin-top: 5px;
+            letter-spacing: 4px;
+        }
+
+        .title {
+            display: inline-block;
+            width: 30%;
+        }
+
+        .title span {
+            position: absolute;
+            margin-left: 15px;
+            margin-top: 5px;
+        }
+
+        .sky-pay-link {
+            display: inline-block;
+            position: absolute;
+            width: 30%;
+            margin-top: 15px;
+            text-align: right;
+        }
+
+        .sky-pay-link a {
+            color: #808080;
+        }
+
+        .content {
+            padding: 30px 30px 40px;
+            font-size: 18px;
+        }
+
+        .payment-success {
+            width: 100%;
+            text-align: center;
+            margin-top: 10px;
+            font-size: 35px;
+            letter-spacing: 4px;
+        }
+
+        .info-row {
+            width: 100%;
+            padding: 10px 0;
+            border-bottom: 1px solid #e9e9e9;
+        }
+
+        .info-row .label {
+            display: inline-block;
+            margin-left: 20px;
+            width: 350px;
+        }
+
+        .info-row .value {
+            font-weight: bold;
+        }
+
+        .stamp {
+            display: inline;
+            background-color: #00cd00;
+            border-radius: 3px;
+            padding: 4px 15px;
+            color: white;
+            font-size: 16px;
+        }
+
+        .payment-method {
+            display: inline;
+        }
+
+        .payment-method img {
+            height: 25px;
+        }
+
+        .payment-method span {
+            margin-left: 6px;
+        }
+
+        .merchant {
+            display: inline-block;
+            position: relative;
+        }
+
+        .merchant img {
+            width: 100px;
+        }
+
+        .merchant a {
+            position: absolute;
+            top: 10px;
+            left: 110px;
+            margin-left: 10px;
+        }
+    </style>
+
+</head>
+<body>
+<div class="receipt">
+    <div class="header">
+        <div class="title">
+            <svg style="width: 30px; height: 30px;" viewBox="0 0 512 512" fill="#00cd00">
+                <path d="M400,188h-36.037v-82.23c0-58.322-48.449-105.77-108-105.77c-59.551,0-108,47.448-108,105.77V188H112
+			c-33.084,0-60,26.916-60,60v204c0,33.084,26.916,60,60,60h288c33.084,0,60-26.916,60-60V248C460,214.916,433.084,188,400,188z
+			M187.963,105.77c0-36.266,30.505-65.77,68-65.77s68,29.504,68,65.77V188h-136V105.77z M420,452c0,11.028-8.972,20-20,20H112
+			c-11.028,0-20-8.972-20-20V248c0-11.028,8.972-20,20-20h288c11.028,0,20,8.972,20,20V452z">
+                </path>
+                <path d="M256,286c-20.435,0-37,16.565-37,37c0,13.048,6.76,24.51,16.963,31.098V398c0,11.045,8.954,20,20,20
+            c11.045,0,20-8.955,20-20v-43.855C286.207,347.565,293,336.08,293,323C293,302.565,276.435,286,256,286z">
+                </path>
+            </svg>
+            <span>Безопасная оплата с Bitcoin</span>
+        </div>
+        <div class="logo">
+            <img src="https://skycrypto.net/logo-white.png" alt="SKY"/>
+            <div class="caption">SKY PAY</div>
+        </div>
+        <div class="sky-pay-link">
+            <a href="https://skycrypto.net" target="_blank">skycrypto.net</a>
+        </div>
+    </div>
+
+    <div class="content">
+        <svg style="width: 80px; height: 80px; margin-left: 45%;" viewBox="0 0 594 594" fill="#00cd00">
+            <path d="M448.8,161.925l-35.7-35.7l-160.65,160.65l35.7,35.7L448.8,161.925z M555.899,126.225l-267.75,270.3l-107.1-107.1
+			l-35.7,35.7l142.8,142.8l306-306L555.899,126.225z M0,325.125l142.8,142.8l35.7-35.7l-142.8-142.8L0,325.125z">
+            </path>
+        </svg>
+        <div class="payment-success">ОПЛАТА ПРОШЛА УСПЕШНО</div>
+
+        <div style="margin-top: 30px;"><b>ИНФОРМАЦИЯ О СДЕЛКЕ В SKY PAY:</b></div>
+        <div class="info-row" style="margin-top: 10px;">
+            <span class="label">Вы отдали:</span><span class="value">29 966 руб.</span>
+        </div>
+        <div class="info-row">
+            <span class="label">Вы получили:</span><span class="value">0.580000 BTC</span>
+        </div>
+        <div class="info-row">
+            <span class="label">Способ оплаты:</span>
+            <div class="payment-method">
+                <img src="https://skycrypto.net/ico/payment-method/%D0%A1%D0%B1%D0%B5%D1%80%D0%B1%D0%B0%D0%BD%D0%BA.svg"
+                     alt="Сбербанк"/>
+                <span>Сбербанк</span>
+            </div>
+        </div>
+        <div class="info-row">
+            <span class="label">SKY ID сделки:</span><span class="value">3261</span>
+        </div>
+        <div class="info-row">
+            <span class="label">Время завершения сделки:</span><span class="value">17:29, 17.09.19</span>
+        </div>
+        <div class="info-row">
+            <span class="label">Статус:</span>
+            <div class="stamp">УСПЕШНО</div>
+        </div>
+
+        <div style="margin-top: 30px;"><b>ИНФОРМАЦИЯ О ЗАКАЗЕ:</b></div>
+        <div class="info-row" style="margin-top: 10px;">
+            <span class="label">Заказ в:</span>
+            <div class="merchant">
+                <img src="https://www.kant.ru/img/logo_transparent.png" alt="КАНТ"/>
+                <a href="http://www.kant.ru" target="_blank">www.kant.ru</a>
+            </div>
+        </div>
+        <div class="info-row">
+            <span class="label">Сумма:</span><span class="value">0.580000 BTC</span>
+        </div>
+        <div class="info-row">
+            <span class="label">Сумма в рублях:</span><span class="value">29 966 руб.</span>
+        </div>
+        <div class="info-row">
+            <span class="label">Номер заказа:</span><span class="value">10035</span>
+        </div>
+        <div class="info-row">
+            <span class="label">Время оплаты:</span><span class="value">17:29, 17.09.19</span>
+        </div>
+        <div class="info-row">
+            <span class="label">Статус:</span>
+            <div class="stamp">ОПЛАЧЕНО</div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
