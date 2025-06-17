@@ -24,7 +24,7 @@ from utils.emails import receipt
 from utils.logger import logger
 from utils.notifications_queue import create_deal_notification, create_closed_dispute_notification, \
     create_message_notification
-from utils.s3 import upload_file_to_s3, insert_dynamo
+# from utils.s3 import upload_file_to_s3, insert_dynamo
 from utils.utils import (
     generate_nickname, generate_promocode, generate_lot_id,
     generate_deal_id, generate_ref_code, generate_campaign_id,

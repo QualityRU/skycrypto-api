@@ -1,14 +1,40 @@
 version: '3.7'
 
 services:
-  api:
-    build: .
+  # api:
+  #   build: .
+  #   restart: always
+  #   container_name: sky_internal_api
+  #   volumes:
+  #     - .:/code
+  #   command: python api.py
+  #   ports:
+  #     - 5555:5555
+  #   env_file:
+  #     - .env
+
+  postgres:
+    image: postgres:15
+    container_name: sky_postgres
     restart: always
-    container_name: sky_internal_api
-    volumes:
-      - .:/code
-    command: python api.py
+    environment:
+      POSTGRES_DB: sky
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
     ports:
-      - 5555:5555
-    env_file:
-      - .env
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq_broker
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: user
+      RABBITMQ_DEFAULT_PASS: password
+
+volumes:
+  postgres_data:

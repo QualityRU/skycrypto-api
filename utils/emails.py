@@ -7,14 +7,14 @@ from random import choice
 
 from utils.email_texts.receipt import RECEIPT
 
-PAYMENT_EMAILS = [
-    {'email': email, 'password': password}
-    for email, password
-    in zip(
-        environ['PAYMENT_EMAILS'].split(','),
-        environ['PAYMENT_EMAIL_PASSWORDS'].split(','),
-    )
-]
+# PAYMENT_EMAILS = [
+#     {'email': email, 'password': password}
+#     for email, password
+#     in zip(
+#         environ['PAYMENT_EMAILS'].split(','),
+#         environ['PAYMENT_EMAIL_PASSWORDS'].split(','),
+#     )
+# ]
 
 
 def receipt(recipient, paid, received, symbol, deal_id, closed_at, label, url, website, broker):

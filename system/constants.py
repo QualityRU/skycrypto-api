@@ -1,5 +1,7 @@
 import os
 from decimal import Decimal
+from dotenv import load_dotenv
+load_dotenv()
 
 NICKNAME_DIGITS = 3
 NICKNAME_LETTERS = 2

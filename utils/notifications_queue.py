@@ -2,6 +2,8 @@ import json
 import logging
 from datetime import datetime
 from os import environ
+from dotenv import load_dotenv
+load_dotenv()
 
 from pika import URLParameters, BlockingConnection
 

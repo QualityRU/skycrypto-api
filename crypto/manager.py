@@ -1,6 +1,6 @@
 from crypto.eth import ETH
 from crypto.btc import BTC
-from crypto.usdt import USDT
+# from crypto.usdt import USDT
 
 
 class Manager:
@@ -8,7 +8,7 @@ class Manager:
         self.currencies = {
             'eth': ETH,
             'btc': BTC,
-            'usdt': USDT
+            # 'usdt': USDT
         }
 
     def from_subunit(self, symbol, val):
